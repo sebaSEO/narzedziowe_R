@@ -1,0 +1,26 @@
+# do pliku z frazami dodajemy liczbę która pozwoli filtrować np. 5 fraz w grupie - ułatwia pracę nad plikiem z frazami na spotkaniu
+library(readxl)
+library(xlsx)
+library(tidyverse)
+setwd("C:/Users/sebastian.mioduszews/Desktop/dane SEO/IKS/")
+dane<- read_xlsx('C:/Users/sebastian.mioduszews/Desktop/dane SEO/IKS/ALL2.xlsx',sheet = 1)
+
+# kolumna liczba określa którą frazą dla danego ID jest dana fraza
+# wyliczne na podstawie kolumny ID
+
+
+dane$liczba <- NA
+#dane2 <- dane%>%select(ID,liczba)
+#dane2$liczba <- NA
+dane$liczba[1] <- 1  
+k <- 1
+
+for (a in 2:length(dane$ID)) { 
+
+if (dane$ID[a] == dane$ID[a-1]) { k<- k+1; dane$liczba[a] <- k}  
+else {
+  k <- 1;
+  dane$liczba[a] <- k}
+  
+  write.xlsx(dane, "C:/Users/sebastian.mioduszews/Desktop/dane SEO/IKS/ALL4.xlsx")
+}
